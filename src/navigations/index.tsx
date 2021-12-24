@@ -1,18 +1,18 @@
-import {NavigationContainer} from '@react-navigation/native';
-
 import React from 'react';
-
+import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import {Home} from '../screens/home/Home';
 
-const MainStack = createStackNavigator();
+import {RootStackParamList} from '../Types';
+import {MainTabNavigator} from './MainBottomTabNavigator';
+
+const RootStackNavigator = createStackNavigator<RootStackParamList>();
 
 export const AppNavContainer: React.FC = () => {
   return (
     <NavigationContainer>
-      <MainStack.Navigator>
-        <MainStack.Screen name="Home" component={Home} />
-      </MainStack.Navigator>
+      <RootStackNavigator.Navigator headerMode="none">
+        <RootStackNavigator.Screen name="Tabs" component={MainTabNavigator} />
+      </RootStackNavigator.Navigator>
     </NavigationContainer>
   );
 };
