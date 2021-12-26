@@ -6,6 +6,20 @@ export const styles = ScaledSheet.create({
     backgroundColor: theme.colorWhite,
     flex: 1,
   },
+  detailContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: scale(90),
+    paddingHorizontal: 10,
+    // backgroundColor: 'red',
+  },
+  img: {
+    borderRadius: scale(10),
+    backgroundColor: theme.colorBlueLight,
+    height: scale(70),
+    marginRight: scale(10),
+    width: scale(70),
+  },
   inputContainer: {
     alignItems: 'center',
     height: scale(50),
