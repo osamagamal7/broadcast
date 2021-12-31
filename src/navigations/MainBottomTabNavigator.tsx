@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -8,7 +7,7 @@ import {
   ListenNowStackParamList,
   MainBottomTabParamList,
   SearchStackParamList,
-} from '../Types';
+} from '../types/Navigation';
 import {Search} from '../screens/Search';
 import {Library} from '../screens/Library';
 import {ListenNow} from '../screens/ListenNow';
