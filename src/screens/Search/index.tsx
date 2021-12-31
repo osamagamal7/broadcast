@@ -1,46 +1,55 @@
-import React from 'react';
-import {
-  View,
-  TextInput,
-  TouchableWithoutFeedback,
-  Keyboard,
-  TouchableOpacity,
-  FlatList,
-  Text,
-} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {View, FlatList, Text} from 'react-native';
 import {scale} from 'react-native-size-matters';
+import {useLazyQuery} from '@apollo/client';
+import {Input} from 'react-native-elements';
 
 import {styles} from './styles';
 import {theme} from '../../assets/theme/colors';
+import {SearchQuery, SearchQueryVariables} from '../../types/graphql';
+import {SEARCH_QUERY} from '../../graphql/query/searchQuery';
+import {SearchLoading} from '../../components/SearchLoading';
+import {SearchEmpty} from '../../components/SearchEmpty';
+import {SearchTile} from '../../components/SearchTile';
 
 export const Search: React.FC = () => {
+  const [term, setTerm] = useState('');
+
+  const [search, {data, loading, error}] = useLazyQuery<
+    SearchQuery,
+    SearchQueryVariables
+  >(SEARCH_QUERY);
+
+  const onSearch = useCallback(async () => {
+    await search({variables: {term}});
+  }, [search, term]);
+
   return (
-    <TouchableWithoutFeedback
-      style={{flex: 1}}
-      onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Search Broadcast"
-            style={styles.input}
-            selectionColor={theme.colorBlueLight}
-          />
+    <View style={styles.container}>
+      <Input
+        inputContainerStyle={styles.inputContainer}
+        onChangeText={setTerm}
+        onSubmitEditing={onSearch}
+        placeholder="Search Broadcast"
+        style={styles.input}
+        selectionColor={theme.colorBlueLight}
+        value={term}
+      />
+      {error?.message ? (
+        <View style={styles.centered}>
+          <Text>Something Went Wrong Please Try Again!</Text>
         </View>
+      ) : (
         <FlatList
-          data={[{id: 1}, {id: 2}]}
-          keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => (
-            <View style={styles.detailContainer}>
-              <View style={styles.img} />
-              <View>
-                <Text>Joe Rogan</Text>
-                <Text>subtitle</Text>
-                <Text>400 Ppl</Text>
-              </View>
-            </View>
-          )}
+          contentContainerStyle={styles.list}
+          data={data?.search ?? []}
+          keyboardShouldPersistTaps="never"
+          keyExtractor={item => String(item.feedUrl)}
+          ListHeaderComponent={<>{loading && <SearchLoading />}</>}
+          ListEmptyComponent={<>{!loading && <SearchEmpty />}</>}
+          renderItem={({item}) => <SearchTile item={item} />}
         />
-      </View>
-    </TouchableWithoutFeedback>
+      )}
+    </View>
   );
 };
