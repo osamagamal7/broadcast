@@ -1,26 +1,42 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Pressable} from 'react-native';
 
 import {styles} from '../screens/Search/styles';
 import {SearchQuery_search} from '../types/graphql';
-import FastImage from 'react-native-fast-image';
+import Image from 'react-native-fast-image';
+import {theme} from '../assets/theme/colors';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {SearchStackParamList} from '../types/Navigation';
+import {useNavigation} from '@react-navigation/native';
 
 type SearchTypeProps = {
   item: SearchQuery_search;
 };
 
+type SearchScreenProp = StackNavigationProp<SearchStackParamList, 'Search'>;
+
 export const SearchTile: React.FC<SearchTypeProps> = ({item}) => {
+  const navigation = useNavigation<SearchScreenProp>();
+
   return (
     <View style={styles.detailContainer}>
-      {/* //add item if there's a thumbnail */}
       {item.thumbnail && (
-        <FastImage source={{uri: item.thumbnail}} style={styles.img} />
+        <Image source={{uri: item.thumbnail}} style={styles.img} />
       )}
 
       <View style={styles.textDetails}>
-        <Text numberOfLines={2}>{item.podcastName}</Text>
-        <Text>{item.artist}</Text>
-        <Text>{item.episodesCount}</Text>
+        <Text numberOfLines={1} style={{fontWeight: 'bold'}}>
+          {item.podcastName}
+        </Text>
+        <Text numberOfLines={1} style={{opacity: 0.4}}>
+          {item.artist}
+        </Text>
+        <Pressable
+          onPress={() => navigation.navigate('BroadCastDetails', {item: item})}>
+          <Text style={{color: theme.colorBlueLight}}>
+            {item.episodesCount} episodes
+          </Text>
+        </Pressable>
       </View>
     </View>
   );
