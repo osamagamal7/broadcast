@@ -11,6 +11,8 @@ import {
 import {Search} from '../screens/Search';
 import {Library} from '../screens/Library';
 import {ListenNow} from '../screens/ListenNow';
+import {BroadCastDetails} from '../screens/BroadCastDetails';
+import {theme} from '../assets/theme/colors';
 
 //ListenNow Stack Nav
 const ListenNowStack = createStackNavigator<ListenNowStackParamList>();
@@ -38,8 +40,14 @@ export const LibraryStackNavigator = () => (
 const SearchStack = createStackNavigator<SearchStackParamList>();
 
 export const SearchStackNavigator = () => (
-  <SearchStack.Navigator>
+  <SearchStack.Navigator
+    screenOptions={{headerTintColor: theme.colorBlueLight}}>
     <SearchStack.Screen name="Search" component={Search} />
+    <SearchStack.Screen
+      name="BroadCastDetails"
+      component={BroadCastDetails}
+      options={{title: 'Details'}}
+    />
   </SearchStack.Navigator>
 );
 
