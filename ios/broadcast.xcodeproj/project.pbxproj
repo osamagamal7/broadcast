@@ -96,6 +96,14 @@
 			name = broadcast;
 			sourceTree = "<group>";
 		};
+		1CC37613F1D64551AF395F0F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -122,6 +130,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				E233CBF5F47BEE60B243DCF8 /* Pods */,
+				1CC37613F1D64551AF395F0F /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
