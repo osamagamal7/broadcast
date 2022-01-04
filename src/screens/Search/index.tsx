@@ -28,6 +28,12 @@ export const Search: React.FC = () => {
     <View style={styles.container}>
       <Input
         inputContainerStyle={styles.inputContainer}
+        leftIcon={{
+          type: 'font-awesome',
+          name: 'search',
+          color: theme.colorDarkGrey,
+          size: 20,
+        }}
         onChangeText={setTerm}
         onSubmitEditing={onSearch}
         placeholder="Search Broadcast"

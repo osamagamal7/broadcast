@@ -27,18 +27,20 @@ export const styles = ScaledSheet.create({
   },
   inputContainer: {
     borderBottomWidth: 0,
-    height: scale(50),
+    borderRadius: scale(15),
+    backgroundColor: theme.colorGrey,
+    height: scale(40),
     marginTop: scale(5),
-    paddingHorizontal: scale(5),
+    paddingHorizontal: scale(7),
     width: '100%',
   },
   input: {
-    backgroundColor: theme.colorGrey,
-    borderRadius: scale(15),
     fontSize: scale(15),
     height: '80%',
+
     paddingHorizontal: scale(7),
   },
+
   list: {
     flexGrow: 1,
   },

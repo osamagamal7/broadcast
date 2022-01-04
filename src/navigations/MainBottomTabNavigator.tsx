@@ -13,6 +13,7 @@ import {Library} from '../screens/Library';
 import {ListenNow} from '../screens/ListenNow';
 import {BroadCastDetails} from '../screens/BroadCastDetails';
 import {theme} from '../assets/theme/colors';
+import {LibraryIcon, ListenNowIcon, SearchIcon} from '../components/Icons';
 
 //ListenNow Stack Nav
 const ListenNowStack = createStackNavigator<ListenNowStackParamList>();
@@ -55,14 +56,49 @@ export const SearchStackNavigator = () => (
 const MainTab = createBottomTabNavigator<MainBottomTabParamList>();
 export const MainTabNavigator: React.FC = () => {
   return (
-    <MainTab.Navigator>
+    <MainTab.Navigator
+      tabBarOptions={{
+        showLabel: false,
+      }}>
       <MainTab.Screen
         name="ListenNow"
         component={ListenNowStackNavigator}
-        options={{title: 'Listen Now'}}
+        options={{
+          title: 'Listen Now',
+          tabBarIcon: ({focused}) => (
+            <ListenNowIcon
+              color={focused ? theme.colorBlueLight : theme.colorDarkGrey}
+              size={25}
+            />
+          ),
+        }}
       />
-      <MainTab.Screen name="Library" component={LibraryStackNavigator} />
-      <MainTab.Screen name="Search" component={SearchStackNavigator} />
+      <MainTab.Screen
+        name="Library"
+        component={LibraryStackNavigator}
+        options={{
+          // tabBarLabel: 'Home',
+          tabBarIcon: ({focused}) => (
+            <LibraryIcon
+              color={focused ? theme.colorBlueLight : theme.colorDarkGrey}
+              size={25}
+            />
+          ),
+        }}
+      />
+      <MainTab.Screen
+        name="Search"
+        component={SearchStackNavigator}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({focused}) => (
+            <SearchIcon
+              color={focused ? theme.colorBlueLight : theme.colorDarkGrey}
+              size={25}
+            />
+          ),
+        }}
+      />
     </MainTab.Navigator>
   );
 };

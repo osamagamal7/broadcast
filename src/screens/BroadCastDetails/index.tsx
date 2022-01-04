@@ -2,8 +2,9 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import Image from 'react-native-fast-image';
-import {theme} from '../../assets/theme/colors';
+import Icon from 'react-native-vector-icons/Feather';
 
+import {theme} from '../../assets/theme/colors';
 import {SearchStackParamList} from '../../types/Navigation';
 import {styles} from './styles';
 
@@ -45,10 +46,26 @@ export const BroadCastDetails: React.FC = () => {
                 <Text style={{color: theme.colorBlueLight}}>Subscribed</Text>
               </View>
             </View>
-            <View style={{marginVertical: 10}}>
-              <Text style={{fontSize: 20, opacity: 0.7}}>
-                Play Last Episodes
-              </Text>
+            <View
+              style={{
+                marginVertical: 10,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  flex: 1.7,
+                  alignItems: 'center',
+                }}>
+                <Icon name="play" color={theme.colorBlueLight} size={35} />
+              </View>
+
+              <View style={{flex: 8.3}}>
+                <Text style={{fontSize: 20, fontWeight: 'bold'}}>Play</Text>
+                <Text style={{fontSize: 16, opacity: 0.7}}>
+                  #400 The Last Episodes
+                </Text>
+              </View>
             </View>
             <View style={{marginTop: 10}}>
               <Text style={{fontSize: 20, fontWeight: 'bold'}}>Episodes</Text>
