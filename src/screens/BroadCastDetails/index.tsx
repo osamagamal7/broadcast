@@ -1,10 +1,20 @@
+import {useQuery} from '@apollo/client';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import React from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import Image from 'react-native-fast-image';
 import Icon from 'react-native-vector-icons/Feather';
+import {getReadableDuration, getWeekDay} from '../../../lib/dateTimeHelpers';
 
 import {theme} from '../../assets/theme/colors';
+import feedQuery from '../../graphql/query/feedQuery';
+import {FeedQuery, FeedQueryVariables} from '../../types/graphql';
 import {SearchStackParamList} from '../../types/Navigation';
 import {styles} from './styles';
 
@@ -13,11 +23,20 @@ type DetailScreenProp = RouteProp<SearchStackParamList, 'BroadCastDetails'>;
 export const BroadCastDetails: React.FC = () => {
   const {item} = useRoute<DetailScreenProp>().params;
 
+  const {data, loading, error} = useQuery<FeedQuery, FeedQueryVariables>(
+    feedQuery,
+    {
+      variables: {
+        feedUrl: item.feedUrl,
+      },
+    },
+  );
+
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.listContainer}
-        data={[{id: '1'}, {id: '2'}, {id: '3'}]}
+        data={data?.feed || []}
         ItemSeparatorComponent={() => {
           return (
             <View
@@ -63,32 +82,34 @@ export const BroadCastDetails: React.FC = () => {
               <View style={{flex: 8.3}}>
                 <Text style={{fontSize: 20, fontWeight: 'bold'}}>Play</Text>
                 <Text style={{fontSize: 16, opacity: 0.7}}>
-                  #400 The Last Episodes
+                  {data?.feed[0].title}
                 </Text>
               </View>
             </View>
             <View style={{marginTop: 10}}>
               <Text style={{fontSize: 20, fontWeight: 'bold'}}>Episodes</Text>
             </View>
+
+            {loading && (
+              <ActivityIndicator size="large" color={theme.colorBlueLight} />
+            )}
           </View>
         )}
-        renderItem={() => (
+        renderItem={({item}) => (
           <View style={{padding: 20}}>
-            <Text style={{opacity: 0.7}}>Friday</Text>
-            <Text style={{fontWeight: 'bold'}}>#400 - The Title</Text>
-            <Text numberOfLines={2} style={{opacity: 0.4}}>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum."
+            <Text style={{opacity: 0.7}}>
+              {getWeekDay(new Date(item.pubDate))}
             </Text>
-            <Text style={{opacity: 0.4}}>3hrs. 13min</Text>
+            <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
+            <Text numberOfLines={2} style={{opacity: 0.4}}>
+              {item.description}
+            </Text>
+            <Text style={{opacity: 0.4}}>
+              {getReadableDuration(item.duration)}
+            </Text>
           </View>
         )}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.linkUrl}
       />
     </View>
   );
