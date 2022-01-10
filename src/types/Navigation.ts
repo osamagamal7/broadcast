@@ -11,7 +11,7 @@ export type ListenNowStackParamList = {
 export type SearchStackParamList = {
   Search: undefined;
   BroadCastDetails: {
-    item: SearchQuery_search;
+    selectedItem: SearchQuery_search;
   };
 };
 

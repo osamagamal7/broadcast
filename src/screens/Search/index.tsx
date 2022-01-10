@@ -32,7 +32,7 @@ export const Search: React.FC = () => {
           type: 'font-awesome',
           name: 'search',
           color: theme.colorDarkGrey,
-          size: 20,
+          size: scale(20),
         }}
         onChangeText={setTerm}
         onSubmitEditing={onSearch}

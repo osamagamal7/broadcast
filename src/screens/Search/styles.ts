@@ -1,11 +1,25 @@
 import {scale, ScaledSheet} from 'react-native-size-matters';
+import {fonts} from '../../assets';
 
 import {theme} from '../../assets/theme/colors';
 
 export const styles = ScaledSheet.create({
+  artist: {
+    fontFamily: fonts.RobotoFontLight,
+    fontSize: scale(13),
+  },
+  broadcastName: {
+    fontFamily: fonts.RobotoFontBold,
+    fontSize: scale(15),
+  },
   container: {
     backgroundColor: theme.colorWhite,
     flex: 1,
+  },
+  episodes: {
+    color: theme.colorBlueLight,
+    fontFamily: fonts.RobotoFontRegular,
+    fontSize: scale(14),
   },
   centered: {
     alignItems: 'center',
@@ -24,6 +38,9 @@ export const styles = ScaledSheet.create({
     height: '80%',
     marginRight: scale(10),
     flex: 2.5,
+  },
+  iconSize: {
+    fontSize: scale(20),
   },
   inputContainer: {
     borderBottomWidth: 0,

@@ -1,10 +1,13 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {fonts} from '../assets';
 
 export const SearchEmpty = () => {
   return (
     <View style={styles.container}>
-      <Text>No Podcasts, please search something...</Text>
+      <Text style={{fontFamily: fonts.RobotoFontRegular}}>
+        No Podcasts, please search something...
+      </Text>
     </View>
   );
 };

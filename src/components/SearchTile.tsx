@@ -4,7 +4,6 @@ import {View, Text, Pressable} from 'react-native';
 import {styles} from '../screens/Search/styles';
 import {SearchQuery_search} from '../types/graphql';
 import Image from 'react-native-fast-image';
-import {theme} from '../assets/theme/colors';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {SearchStackParamList} from '../types/Navigation';
 import {useNavigation} from '@react-navigation/native';
@@ -25,17 +24,17 @@ export const SearchTile: React.FC<SearchTypeProps> = ({item}) => {
       )}
 
       <View style={styles.textDetails}>
-        <Text numberOfLines={1} style={{fontWeight: 'bold'}}>
+        <Text numberOfLines={1} style={styles.broadcastName}>
           {item.podcastName}
         </Text>
-        <Text numberOfLines={1} style={{opacity: 0.4}}>
+        <Text numberOfLines={1} style={styles.artist}>
           {item.artist}
         </Text>
         <Pressable
-          onPress={() => navigation.navigate('BroadCastDetails', {item: item})}>
-          <Text style={{color: theme.colorBlueLight}}>
-            {item.episodesCount} episodes
-          </Text>
+          onPress={() =>
+            navigation.navigate('BroadCastDetails', {selectedItem: item})
+          }>
+          <Text style={styles.episodes}>{item.episodesCount} episodes</Text>
         </Pressable>
       </View>
     </View>
