@@ -33,7 +33,7 @@ export const BroadCastDetails: React.FC = () => {
         ItemSeparatorComponent={ItemSeparator}
         ListHeaderComponent={
           <DetailsHeaderList
-            title={data?.feed[0].title || ''}
+            headerData={data?.feed[0]!}
             selectedItem={selectedItem}
             loading={loading}
           />
