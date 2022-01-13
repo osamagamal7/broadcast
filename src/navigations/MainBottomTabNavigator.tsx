@@ -1,6 +1,9 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  BottomTabBar,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
 
 import {
   LibraryStackParamList,
@@ -14,6 +17,7 @@ import {ListenNow} from '../screens/ListenNow';
 import {BroadCastDetails} from '../screens/BroadCastDetails';
 import {theme} from '../assets/theme/colors';
 import {LibraryIcon, ListenNowIcon, SearchIcon} from '../components/Icons';
+import {MiniPlayer} from '../components/MiniPlayer';
 
 //ListenNow Stack Nav
 const ListenNowStack = createStackNavigator<ListenNowStackParamList>();
@@ -57,6 +61,12 @@ const MainTab = createBottomTabNavigator<MainBottomTabParamList>();
 export const MainTabNavigator: React.FC = () => {
   return (
     <MainTab.Navigator
+      tabBar={tabProps => (
+        <>
+          <MiniPlayer />
+          <BottomTabBar {...tabProps} />
+        </>
+      )}
       tabBarOptions={{
         showLabel: false,
       }}>
