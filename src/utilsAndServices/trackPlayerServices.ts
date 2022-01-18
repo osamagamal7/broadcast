@@ -7,9 +7,19 @@ module.exports = async function () {
 
   TrackPlayer.addEventListener('remote-stop', () => TrackPlayer.destroy());
 
-  TrackPlayer.addEventListener('playback-track-changed', () => {});
+  TrackPlayer.addEventListener(
+    'remote-jump-forward',
+    async ({interval}: {interval: number}) => {
+      const position = await TrackPlayer.getPosition();
+      await TrackPlayer.seekTo(position + interval);
+    },
+  );
 
-  TrackPlayer.addEventListener('playback-state', state => {
-    console.log('playback-state', state);
-  });
+  TrackPlayer.addEventListener(
+    'remote-jump-backward',
+    async ({interval}: {interval: number}) => {
+      const position = await TrackPlayer.getPosition();
+      await TrackPlayer.seekTo(position - interval);
+    },
+  );
 };

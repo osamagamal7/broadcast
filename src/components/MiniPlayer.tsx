@@ -1,12 +1,6 @@
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import React from 'react';
-import {
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Text,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet, Pressable, View, Text, Dimensions} from 'react-native';
 import Image from 'react-native-fast-image';
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -36,24 +30,22 @@ export const MiniPlayer = () => {
           </Text>
         </View>
         <View>
-          {playerContext.isPaused && (
-            <TouchableOpacity onPress={() => playerContext.play()}>
+          {playerContext.isPaused ? (
+            <Pressable onPress={() => playerContext.play()}>
               <Icon name="play" size={(windowHeight / 11) * 0.45} />
-            </TouchableOpacity>
-          )}
-
-          {playerContext.isPlaying && (
-            <TouchableOpacity onPress={playerContext.pause}>
+            </Pressable>
+          ) : (
+            <Pressable onPress={playerContext.pause}>
               <Icon name="pause" size={(windowHeight / 11) * 0.45} />
-            </TouchableOpacity>
-          )}
-
-          {playerContext.isStopped && (
-            <TouchableOpacity onPress={() => null}>
-              <Icon name="square" size={(windowHeight / 11) * 0.45} />
-            </TouchableOpacity>
+            </Pressable>
           )}
         </View>
+
+        <Pressable
+          onPress={() => playerContext.seekTo(30)}
+          style={styles.seekForward}>
+          <Icon name="rotate-cw" size={(windowHeight / 11) * 0.45} />
+        </Pressable>
       </View>
     </View>
   );
@@ -78,6 +70,9 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     paddingHorizontal: scale(8),
+  },
+  seekForward: {
+    marginLeft: scale(5),
   },
   textContainer: {
     flex: 1,

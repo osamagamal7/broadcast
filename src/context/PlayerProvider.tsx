@@ -15,6 +15,7 @@ type PlayerContextType = {
   isEmpty: boolean;
   currentTrack: Track | null;
   play: (track?: Track) => void;
+  seekTo: (amount?: number) => void;
   pause: () => void;
 };
 
@@ -41,7 +42,7 @@ export const PlayerProvider: React.FC<ContextProviderType> = ({children}) => {
   }, [playerState]);
 
   //when we first play the track it'll pass a new track, but when we toggle between pause and play,
-  //  it's still the currentTrack and we won't pass a new track, so the first condition won't run.
+  //  it's still the currentTrack and we won't pass a new track, so the first condition will run.
   const play = useCallback(
     async (track?: Track) => {
       if (!track) {
@@ -49,6 +50,10 @@ export const PlayerProvider: React.FC<ContextProviderType> = ({children}) => {
           await TrackPlayer.play();
         }
         return;
+      }
+      //playing a new different track than the current one
+      if (currentTrack && currentTrack.id !== track.id) {
+        await TrackPlayer.reset();
       }
 
       await TrackPlayer.add([track]);
@@ -62,6 +67,11 @@ export const PlayerProvider: React.FC<ContextProviderType> = ({children}) => {
     await TrackPlayer.pause();
   }, []);
 
+  const seekTo = useCallback(async (amount = 30) => {
+    const position = await TrackPlayer.getPosition();
+    await TrackPlayer.seekTo(position + amount);
+  }, []);
+
   //the passed down value has the trackPlayer state as the current played track and 2 func (pause,play)
   const value: PlayerContextType = {
     isPlaying: playerState === TrackPlayerState.Playing,
@@ -71,6 +81,7 @@ export const PlayerProvider: React.FC<ContextProviderType> = ({children}) => {
     currentTrack,
     pause,
     play,
+    seekTo,
   };
 
   return (
