@@ -33,6 +33,22 @@ export const getWeekDay = (date: Date): WeekDayEnum => {
 };
 
 export const getReadableDuration = (duration: string): string => {
-  const [hr, min] = duration.split(':');
-  return `${+hr}hrs. ${min}min`;
+  const durationSplit = duration.split(':');
+
+  if (durationSplit.length === 1) {
+    const [m] = durationSplit;
+    return `${Number(m)}min`;
+  }
+  if (durationSplit.length === 2) {
+    const [m] = durationSplit;
+    return `${Number(m)}min`;
+  }
+
+  const [h, m] = durationSplit;
+
+  if (h === '00') {
+    return `${Number(m)}min`;
+  }
+
+  return `${Number(h)}hrs. ${m}min`;
 };

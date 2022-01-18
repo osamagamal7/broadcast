@@ -19,6 +19,8 @@ describe('dateTimeHelpers', () => {
     it('should return readable duration', () => {
       expect(getReadableDuration('03:20:00')).toBe('3hrs. 20min');
       expect(getReadableDuration('02:10:00')).toBe('2hrs. 10min');
+      expect(getReadableDuration('00:55:00')).toBe('55min');
+      expect(getReadableDuration('16:18')).toBe('16min');
     });
   });
 });
