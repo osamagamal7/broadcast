@@ -9,13 +9,13 @@ import {theme} from '../assets/theme/colors';
 import {usePlayerContext} from '../context/PlayerProvider';
 
 type DetailsHeaderType = {
-  headerData: FeedQuery_feed;
+  feedData: FeedQuery_feed;
   loading: boolean;
   selectedItem: SearchQuery_search;
 };
 
 export const DetailsHeaderList: React.FC<DetailsHeaderType> = ({
-  headerData,
+  feedData,
   loading,
   selectedItem,
 }) => {
@@ -47,14 +47,14 @@ export const DetailsHeaderList: React.FC<DetailsHeaderType> = ({
           }}>
           <Pressable
             onPress={() => {
-              if (!headerData) {
+              if (!feedData) {
                 return;
               }
               play({
-                title: headerData.title,
-                artwork: headerData.image ?? selectedItem.thumbnail,
-                id: headerData.linkUrl,
-                url: headerData.linkUrl,
+                title: feedData.title,
+                artwork: feedData.image ?? selectedItem.thumbnail,
+                id: feedData.linkUrl,
+                url: feedData.linkUrl,
                 artist: selectedItem.artist,
               });
             }}>
@@ -64,7 +64,7 @@ export const DetailsHeaderList: React.FC<DetailsHeaderType> = ({
 
         <View style={{flex: 8.3}}>
           <Text style={styles.playText}>Play</Text>
-          <Text style={styles.title}>{headerData?.title}</Text>
+          <Text style={styles.title}>{feedData?.title}</Text>
         </View>
       </View>
 

@@ -18,6 +18,7 @@ import {BroadCastDetails} from '../screens/BroadCastDetails';
 import {theme} from '../assets/theme/colors';
 import {LibraryIcon, ListenNowIcon, SearchIcon} from '../components/Icons';
 import {MiniPlayer} from '../components/MiniPlayer';
+import {EpisodeDetailScreen} from '../screens/EpisodeDetailScreen.js';
 
 //ListenNow Stack Nav
 const ListenNowStack = createStackNavigator<ListenNowStackParamList>();
@@ -42,6 +43,24 @@ export const LibraryStackNavigator = () => (
 );
 
 //Search Stack Nav
+const BroadcastStack = createStackNavigator();
+
+const BroadcastStackNavigator = () => {
+  return (
+    <BroadcastStack.Navigator headerMode="none">
+      <BroadcastStack.Screen
+        name="BroadCastDetails"
+        component={BroadCastDetails}
+      />
+      <BroadcastStack.Screen
+        name="EpisodeDetails"
+        component={EpisodeDetailScreen}
+      />
+    </BroadcastStack.Navigator>
+  );
+};
+
+//Search Stack Nav
 const SearchStack = createStackNavigator<SearchStackParamList>();
 
 export const SearchStackNavigator = () => (
@@ -49,9 +68,9 @@ export const SearchStackNavigator = () => (
     screenOptions={{headerTintColor: theme.colorBlueLight}}>
     <SearchStack.Screen name="Search" component={Search} />
     <SearchStack.Screen
-      name="BroadCastDetails"
-      component={BroadCastDetails}
-      options={{title: 'Details'}}
+      name="BroadCastDetailsNav"
+      component={BroadcastStackNavigator}
+      options={{title: 'Episode', headerBackTitle: 'Back'}}
     />
   </SearchStack.Navigator>
 );

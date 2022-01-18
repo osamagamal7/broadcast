@@ -32,7 +32,10 @@ export const SearchTile: React.FC<SearchTypeProps> = ({item}) => {
         </Text>
         <Pressable
           onPress={() =>
-            navigation.navigate('BroadCastDetails', {selectedItem: item})
+            navigation.navigate('BroadCastDetailsNav', {
+              screen: 'BroadCastDetails',
+              params: {selectedItem: item},
+            })
           }>
           <Text style={styles.episodes}>{item.episodesCount} episodes</Text>
         </Pressable>

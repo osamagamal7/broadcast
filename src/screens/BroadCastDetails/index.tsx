@@ -8,10 +8,13 @@ import {ItemDetailsTile} from '../../components/ItemDetailsTile';
 import {ItemSeparator} from '../../components/ItemSeparator';
 import feedQuery from '../../graphql/query/feedQuery';
 import {FeedQuery, FeedQueryVariables} from '../../types/graphql';
-import {SearchStackParamList} from '../../types/Navigation';
+import {
+  SearchStackParamList,
+  BroadcastStackParamList,
+} from '../../types/Navigation';
 import {styles} from './styles';
 
-type DetailScreenProp = RouteProp<SearchStackParamList, 'BroadCastDetails'>;
+type DetailScreenProp = RouteProp<BroadcastStackParamList, 'BroadCastDetails'>;
 
 export const BroadCastDetails: React.FC = () => {
   const {selectedItem} = useRoute<DetailScreenProp>().params;
@@ -33,12 +36,14 @@ export const BroadCastDetails: React.FC = () => {
         ItemSeparatorComponent={ItemSeparator}
         ListHeaderComponent={
           <DetailsHeaderList
-            headerData={data?.feed[0]!}
+            feedData={data?.feed[0]!}
             selectedItem={selectedItem}
             loading={loading}
           />
         }
-        renderItem={({item}) => <ItemDetailsTile item={item} />}
+        renderItem={({item}) => (
+          <ItemDetailsTile item={item} selectedItem={selectedItem} />
+        )}
         keyExtractor={item => item.linkUrl}
       />
     </View>
