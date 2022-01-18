@@ -10,6 +10,7 @@ const feedQuery = gql`
       pubDate
       title
       text
+      summary
     }
   }
 `;
