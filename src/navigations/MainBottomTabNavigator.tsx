@@ -47,7 +47,7 @@ const BroadcastStack = createStackNavigator();
 
 const BroadcastStackNavigator = () => {
   return (
-    <BroadcastStack.Navigator headerMode="none">
+    <BroadcastStack.Navigator>
       <BroadcastStack.Screen
         name="BroadCastDetails"
         component={BroadCastDetails}
@@ -70,7 +70,7 @@ export const SearchStackNavigator = () => (
     <SearchStack.Screen
       name="BroadCastDetailsNav"
       component={BroadcastStackNavigator}
-      options={{title: 'Episode', headerBackTitle: 'Back'}}
+      options={{title: 'Episode', headerBackTitle: 'Back', headerShown: false}}
     />
   </SearchStack.Navigator>
 );
