@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, ActivityIndicator, Pressable} from 'react-native';
 import {styles} from '../screens/BroadCastDetails/styles';
 import Image from 'react-native-fast-image';
@@ -7,6 +7,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import {FeedQuery_feed, SearchQuery_search} from '../types/graphql';
 import {theme} from '../assets/theme/colors';
 import {usePlayerContext} from '../context/PlayerProvider';
+import {useDBContext} from '../context/DBContext';
+import {BroadcastModel} from '../models/BroadcastModel';
 
 type DetailsHeaderType = {
   feedData: FeedQuery_feed;
@@ -20,10 +22,11 @@ export const DetailsHeaderList: React.FC<DetailsHeaderType> = ({
   selectedItem,
 }) => {
   const {play} = usePlayerContext();
+  const {subToBroadcast} = useDBContext();
+
   return (
     <View style={styles.listHeaderComponent}>
       {/* first row container */}
-
       <View style={{flexDirection: 'row'}}>
         <View style={{flex: 3}}>
           {selectedItem.thumbnail && (
@@ -34,7 +37,20 @@ export const DetailsHeaderList: React.FC<DetailsHeaderType> = ({
         <View style={{flex: 6.5}}>
           <Text style={styles.podcastName}>{selectedItem.podcastName}</Text>
           <Text style={styles.artistName}>{selectedItem.artist}</Text>
-          <Text style={styles.subscribed}>Subscribed</Text>
+          <Pressable
+            onPress={() =>
+              subToBroadcast(
+                new BroadcastModel({
+                  artist: selectedItem?.artist,
+                  episodesCount: selectedItem?.episodesCount,
+                  feedUrl: selectedItem?.feedUrl,
+                  name: selectedItem?.podcastName,
+                  thumbnail: selectedItem?.thumbnail,
+                }),
+              )
+            }>
+            <Text style={styles.subscribed}>Subscribed</Text>
+          </Pressable>
         </View>
       </View>
 

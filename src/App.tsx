@@ -8,6 +8,7 @@ import {AppNavContainer} from './navigations';
 import {client} from './graphql/client';
 import {theme} from './assets/theme/colors';
 import {PlayerProvider} from './context/PlayerProvider';
+import {DBProvider} from './context/DBContext';
 
 export const App: React.FC = () => {
   const [isReady, setIsReady] = React.useState<boolean>(false);
@@ -37,7 +38,9 @@ export const App: React.FC = () => {
     <ApolloProvider client={client}>
       {isReady ? (
         <PlayerProvider>
-          <AppNavContainer />
+          <DBProvider>
+            <AppNavContainer />
+          </DBProvider>
         </PlayerProvider>
       ) : (
         <ActivityIndicator
