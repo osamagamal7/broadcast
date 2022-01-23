@@ -7,47 +7,51 @@ import Icon from 'react-native-vector-icons/Feather';
 import {theme} from '../assets/theme/colors';
 import {usePlayerContext} from '../context/PlayerProvider';
 import {fonts} from '../assets';
+import {useNavigation} from '@react-navigation/native';
 
 const windowHeight = Dimensions.get('window').height;
 
 export const MiniPlayer = () => {
   const playerContext = usePlayerContext();
+  const {navigate} = useNavigation();
 
   if (playerContext.isEmpty || !playerContext.currentTrack) {
     return null;
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.innerContainer}>
-        <Image
-          source={{uri: playerContext.currentTrack.artwork}}
-          style={styles.img}
-        />
-        <View style={styles.textContainer}>
-          <Text style={styles.txt} numberOfLines={1}>
-            {playerContext.currentTrack.title}
-          </Text>
-        </View>
-        <View>
-          {playerContext.isPaused ? (
-            <Pressable onPress={() => playerContext.play()}>
-              <Icon name="play" size={(windowHeight / 11) * 0.45} />
-            </Pressable>
-          ) : (
-            <Pressable onPress={playerContext.pause}>
-              <Icon name="pause" size={(windowHeight / 11) * 0.45} />
-            </Pressable>
-          )}
-        </View>
+    <Pressable onPress={() => navigate('Player')}>
+      <View style={styles.container}>
+        <View style={styles.innerContainer}>
+          <Image
+            source={{uri: playerContext.currentTrack.artwork}}
+            style={styles.img}
+          />
+          <View style={styles.textContainer}>
+            <Text style={styles.txt} numberOfLines={1}>
+              {playerContext.currentTrack.title}
+            </Text>
+          </View>
+          <View>
+            {playerContext.isPaused ? (
+              <Pressable onPress={() => playerContext.play()}>
+                <Icon name="play" size={(windowHeight / 11) * 0.45} />
+              </Pressable>
+            ) : (
+              <Pressable onPress={playerContext.pause}>
+                <Icon name="pause" size={(windowHeight / 11) * 0.45} />
+              </Pressable>
+            )}
+          </View>
 
-        <Pressable
-          onPress={() => playerContext.seekTo(30)}
-          style={styles.seekForward}>
-          <Icon name="rotate-cw" size={(windowHeight / 11) * 0.45} />
-        </Pressable>
+          <Pressable
+            onPress={() => playerContext.seekTo(30)}
+            style={styles.seekForward}>
+            <Icon name="rotate-cw" size={(windowHeight / 11) * 0.45} />
+          </Pressable>
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

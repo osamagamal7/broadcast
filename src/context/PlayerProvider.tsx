@@ -17,9 +17,10 @@ type PlayerContextType = {
   play: (track?: Track) => void;
   seekTo: (amount?: number) => void;
   pause: () => void;
+  goTo: (amount: number) => void;
 };
 
-export const PlayerContext = React.createContext<PlayerContextType>(
+export const PlayerContext = createContext<PlayerContextType>(
   {} as PlayerContextType,
 );
 
@@ -67,6 +68,10 @@ export const PlayerProvider: React.FC<ContextProviderType> = ({children}) => {
     await TrackPlayer.pause();
   }, []);
 
+  const goTo = useCallback(async amount => {
+    await TrackPlayer.seekTo(amount);
+  }, []);
+
   const seekTo = useCallback(async (amount = 30) => {
     const position = await TrackPlayer.getPosition();
     await TrackPlayer.seekTo(position + amount);
@@ -82,6 +87,7 @@ export const PlayerProvider: React.FC<ContextProviderType> = ({children}) => {
     pause,
     play,
     seekTo,
+    goTo,
   };
 
   return (
