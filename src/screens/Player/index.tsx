@@ -13,18 +13,26 @@ import {ProgressSlider} from '../../components/ProgressSlider';
 const {width} = Dimensions.get('window');
 
 export const PlayerScreen: React.FC = () => {
-  const {goBack} = useNavigation();
+  const {goBack, navigate} = useNavigation();
   const {currentTrack, seekTo, play, isPaused, pause} = usePlayerContext();
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
-        <Pressable
-          onPress={() => goBack()}
-          style={styles.icon}
-          hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}>
-          <Icon name="chevron-down" size={30} />
-        </Pressable>
+        <View style={styles.btnContainer}>
+          <Pressable
+            onPress={() => goBack()}
+            style={styles.icon}
+            hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}>
+            <Icon name="chevron-down" size={30} />
+          </Pressable>
+          <Pressable
+            onPress={() => navigate('Queue')}
+            style={styles.icon}
+            hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}>
+            <Icon name="list" size={30} />
+          </Pressable>
+        </View>
         <View style={styles.imgContainer}>
           <Image source={{uri: currentTrack?.artwork}} style={styles.img} />
         </View>
@@ -66,6 +74,10 @@ const styles = ScaledSheet.create({
     fontFamily: fonts.RobotoFontLight,
     fontSize: scale(13),
   },
+  btnContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   container: {
     flex: 1,
     backgroundColor: theme.colorWhite,
@@ -95,7 +107,7 @@ const styles = ScaledSheet.create({
   },
   icon: {
     marginBottom: scale(20),
-    paddingLeft: scale(10),
+    paddingHorizontal: scale(10),
   },
   PlayNPause: {
     marginHorizontal: scale(15),

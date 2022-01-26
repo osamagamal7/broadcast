@@ -14,7 +14,7 @@ type PlayerContextType = {
   isStopped: boolean;
   isEmpty: boolean;
   currentTrack: Track | null;
-  play: (track?: Track) => void;
+  play: (track?: Track, index?: number) => void;
   seekTo: (amount?: number) => void;
   pause: () => void;
   goTo: (amount: number) => void;
@@ -42,24 +42,48 @@ export const PlayerProvider: React.FC<ContextProviderType> = ({children}) => {
     };
   }, [playerState]);
 
-  //when we first play the track it'll pass a new track, but when we toggle between pause and play,
-  //  it's still the currentTrack and we won't pass a new track, so the first condition will run.
   const play = useCallback(
-    async (track?: Track) => {
+    async (track?: Track, index?: number) => {
       if (!track) {
         if (currentTrack) {
           await TrackPlayer.play();
         }
         return;
       }
-      //playing a new different track than the current one
-      if (currentTrack && currentTrack.id !== track.id) {
-        await TrackPlayer.reset();
+
+      if (currentTrack && track.id === currentTrack.id) {
+        await TrackPlayer.play();
+        return;
+      }
+      //when a track in queue gets played
+      try {
+        if (index || index === 0) {
+          await TrackPlayer.getTrack(index);
+          await TrackPlayer.skip(index);
+          setCurrentTrack(track);
+          return;
+        }
+      } catch (error) {
+        console.log('eeerr', error);
       }
 
+      //add new track
+      if (currentTrack && track.id !== currentTrack.id) {
+        await TrackPlayer.add([track]);
+        //get all queue and find index of the the new track
+        const q = await TrackPlayer.getQueue();
+
+        await TrackPlayer.skip(q.findIndex(qTracks => qTracks.id === track.id));
+        TrackPlayer.play();
+        setCurrentTrack(track);
+        return;
+      }
+
+      //first track played
       await TrackPlayer.add([track]);
-      setCurrentTrack(() => track);
       await TrackPlayer.play();
+
+      setCurrentTrack(track);
     },
     [currentTrack],
   );
