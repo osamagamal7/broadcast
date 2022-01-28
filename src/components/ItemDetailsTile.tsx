@@ -40,7 +40,11 @@ export const ItemDetailsTile: React.FC<DetailsHeaderType> = ({
         {item.summary
           .replace(/<[^>]*>/g, ' ')
           .replace(/\s{2,}/g, ' ')
-          .trim()}
+          .trim() ||
+          item.description
+            .replace(/<[^>]*>/g, ' ')
+            .replace(/\s{2,}/g, ' ')
+            .trim()}
       </Text>
 
       <Text style={styles.podcasTileDuration}>

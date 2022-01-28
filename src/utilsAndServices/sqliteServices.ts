@@ -4,13 +4,11 @@ import {BroadcastModel} from '../models/BroadcastModel';
 
 export class SQLiteServices implements IDatabaseContract {
   _db: SQLite.SQLiteDatabase;
-  isReady = false;
 
   constructor() {
     this._db = SQLite.openDatabase(
       {name: 'broadcasts.db', location: 'default'},
       () => {
-        console.log('SQLite database connect');
         this.init();
       },
       err => {
@@ -29,7 +27,6 @@ export class SQLiteServices implements IDatabaseContract {
         thumbnail TEXT
       );
     `);
-    this.isReady = true;
   }
 
   getAllBroadCasts(): Promise<BroadcastModel[]> {
@@ -77,7 +74,6 @@ export class SQLiteServices implements IDatabaseContract {
             broadcastModel.thumbnail,
           ],
           () => {
-            console.log('broadcast insert');
             resolve();
           },
           (_, err) => {

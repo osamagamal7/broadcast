@@ -55,16 +55,19 @@ export const PlayerProvider: React.FC<ContextProviderType> = ({children}) => {
         await TrackPlayer.play();
         return;
       }
+
       //when a track in queue gets played
-      try {
-        if (index || index === 0) {
+      if (index && index >= 0) {
+        try {
           await TrackPlayer.getTrack(index);
           await TrackPlayer.skip(index);
+          // TrackPlayer.play();
           setCurrentTrack(track);
+        } catch (error) {
+          console.log('eeerr', error);
+        } finally {
           return;
         }
-      } catch (error) {
-        console.log('eeerr', error);
       }
 
       //add new track

@@ -49,7 +49,7 @@ export const DetailsHeaderList: React.FC<DetailsHeaderType> = ({
                 }),
               )
             }>
-            <Text style={styles.subscribed}>Subscribed</Text>
+            <Text style={styles.subscribed}>Subscribe</Text>
           </Pressable>
         </View>
       </View>

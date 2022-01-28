@@ -16,9 +16,6 @@ export const QueueScreen: React.FC = () => {
 
   const getQueue = async () => {
     const tracks = await TrackPlayer.getQueue();
-
-    console.log('tracks', tracks);
-
     setQueue(tracks);
   };
 

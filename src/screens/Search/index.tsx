@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {View, FlatList, Text} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import {useLazyQuery} from '@apollo/client';
