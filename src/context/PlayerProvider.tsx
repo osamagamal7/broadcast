@@ -57,7 +57,7 @@ export const PlayerProvider: React.FC<ContextProviderType> = ({children}) => {
       }
 
       //when a track in queue gets played
-      if (index && index >= 0) {
+      if (index || index === 0) {
         try {
           await TrackPlayer.getTrack(index);
           await TrackPlayer.skip(index);
@@ -99,12 +99,11 @@ export const PlayerProvider: React.FC<ContextProviderType> = ({children}) => {
     await TrackPlayer.seekTo(amount);
   }, []);
 
-  const seekTo = useCallback(async (amount = 30) => {
+  const seekTo = useCallback(async (amount = 15) => {
     const position = await TrackPlayer.getPosition();
     await TrackPlayer.seekTo(position + amount);
   }, []);
 
-  //the passed down value has the trackPlayer state as the current played track and 2 func (pause,play)
   const value: PlayerContextType = {
     isPlaying: playerState === TrackPlayerState.Playing,
     isPaused: playerState === TrackPlayerState.Paused,

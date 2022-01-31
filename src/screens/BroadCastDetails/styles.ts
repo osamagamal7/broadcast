@@ -16,6 +16,11 @@ export const styles = ScaledSheet.create({
     flex: 1,
     backgroundColor: theme.colorWhite,
   },
+  centered: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+  },
   detailsRowTile: {
     padding: scale(20),
   },

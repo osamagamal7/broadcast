@@ -92,7 +92,6 @@ const styles = ScaledSheet.create({
     fontFamily: fonts.RobotoFontLight,
   },
   trackContainer: {
-    // alignItems: 'center',
     flexDirection: 'row',
     height: scale(90),
   },

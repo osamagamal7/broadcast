@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useState} from 'react';
 import {View, FlatList, Text} from 'react-native';
 import {scale} from 'react-native-size-matters';
 import {useLazyQuery} from '@apollo/client';
@@ -8,8 +8,7 @@ import {styles} from './styles';
 import {theme} from '../../assets/theme/colors';
 import {SearchQuery, SearchQueryVariables} from '../../types/graphql';
 import {SEARCH_QUERY} from '../../graphql/query/searchQuery';
-import {SearchLoading} from '../../components/SearchLoading';
-import {SearchEmpty} from '../../components/SearchEmpty';
+import {SearchLoadingOrEmpty} from '../../components/SearchLoading';
 import {SearchTile} from '../../components/SearchTile';
 
 export const Search: React.FC = () => {
@@ -20,9 +19,9 @@ export const Search: React.FC = () => {
     SearchQueryVariables
   >(SEARCH_QUERY);
 
-  const onSearch = useCallback(async () => {
+  const onSearch = async () => {
     await search({variables: {term}});
-  }, [search, term]);
+  };
 
   return (
     <View style={styles.container}>
@@ -50,9 +49,15 @@ export const Search: React.FC = () => {
           contentContainerStyle={styles.list}
           data={data?.search ?? []}
           keyboardShouldPersistTaps="never"
-          keyExtractor={item => String(item.feedUrl)}
-          ListHeaderComponent={<>{loading && <SearchLoading />}</>}
-          ListEmptyComponent={<>{!loading && <SearchEmpty />}</>}
+          keyExtractor={item => {
+            return (
+              String(item.feedUrl) + String(Math.floor(Math.random() * 1000))
+            );
+          }}
+          ListHeaderComponent={<>{loading && <SearchLoadingOrEmpty />}</>}
+          ListEmptyComponent={
+            <>{!loading && <SearchLoadingOrEmpty empty={false} />}</>
+          }
           renderItem={({item}) => <SearchTile item={item} />}
         />
       )}

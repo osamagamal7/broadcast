@@ -1,7 +1,9 @@
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import {fonts} from '../../assets';
-
+import {Dimensions} from 'react-native';
 import {theme} from '../../assets/theme/colors';
+
+const {width, height} = Dimensions.get('window');
 
 export const styles = ScaledSheet.create({
   artist: {
@@ -27,17 +29,16 @@ export const styles = ScaledSheet.create({
     justifyContent: 'center',
   },
   detailContainer: {
-    alignItems: 'center',
+    // alignItems: 'center',
     flexDirection: 'row',
-    height: scale(90),
-    paddingHorizontal: 10,
+    height: height / 9,
+    paddingHorizontal: width / 30,
   },
   img: {
     borderRadius: scale(10),
     backgroundColor: theme.colorBlueLight,
     height: '80%',
-    marginRight: scale(10),
-    flex: 2.5,
+    flex: 2.6,
   },
   iconSize: {
     fontSize: scale(20),
@@ -62,6 +63,6 @@ export const styles = ScaledSheet.create({
     flexGrow: 1,
   },
   textDetails: {
-    flex: 7.5,
+    flex: 7,
   },
 });

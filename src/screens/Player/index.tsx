@@ -9,13 +9,13 @@ import {theme} from '../../assets/theme/colors';
 import {usePlayerContext} from '../../context/PlayerProvider';
 import {fonts} from '../../assets';
 import {ProgressSlider} from '../../components/ProgressSlider';
+import {hitSlop} from '../../helpers';
 
 const {width} = Dimensions.get('window');
 
 export const PlayerScreen: React.FC = () => {
   const {goBack, navigate} = useNavigation();
   const {currentTrack, seekTo, play, isPaused, pause} = usePlayerContext();
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
@@ -23,14 +23,14 @@ export const PlayerScreen: React.FC = () => {
           <Pressable
             onPress={() => goBack()}
             style={styles.icon}
-            hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}>
-            <Icon name="chevron-down" size={30} />
+            hitSlop={hitSlop(20)}>
+            <Icon name="chevron-down" size={width / 12} />
           </Pressable>
           <Pressable
             onPress={() => navigate('Queue')}
             style={styles.icon}
-            hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}>
-            <Icon name="list" size={30} />
+            hitSlop={hitSlop(20)}>
+            <Icon name="list" size={width / 12} />
           </Pressable>
         </View>
         <View style={styles.imgContainer}>
@@ -45,22 +45,22 @@ export const PlayerScreen: React.FC = () => {
         </View>
         <View style={styles.controllerContainers}>
           <Pressable onPress={() => seekTo(-15)}>
-            <Icon name="rotate-ccw" size={scale(35)} />
+            <Icon name="rotate-ccw" size={width / 11} />
           </Pressable>
           <View style={styles.PlayNPause}>
             {isPaused ? (
               <Pressable onPress={() => play()}>
-                <Icon name="play" size={scale(55)} />
+                <Icon name="play" size={width / 7} />
               </Pressable>
             ) : (
               <Pressable onPress={pause}>
-                <Icon name="pause" size={scale(55)} />
+                <Icon name="pause" size={width / 7} />
               </Pressable>
             )}
           </View>
           <View>
             <Pressable onPress={() => seekTo()}>
-              <Icon name="rotate-cw" size={scale(35)} />
+              <Icon name="rotate-cw" size={width / 11} />
             </Pressable>
           </View>
         </View>

@@ -22,7 +22,7 @@ export const SearchTile: React.FC<SearchTypeProps> = ({item}) => {
       {item.thumbnail && (
         <Image source={{uri: item.thumbnail}} style={styles.img} />
       )}
-
+      <View style={{flex: 0.4}} />
       <View style={styles.textDetails}>
         <Text numberOfLines={1} style={styles.broadcastName}>
           {item.podcastName}

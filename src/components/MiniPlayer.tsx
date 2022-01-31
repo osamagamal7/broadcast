@@ -1,6 +1,6 @@
 import {scale, ScaledSheet} from 'react-native-size-matters';
 import React from 'react';
-import {StyleSheet, Pressable, View, Text, Dimensions} from 'react-native';
+import {Pressable, View, Text, Dimensions} from 'react-native';
 import Image from 'react-native-fast-image';
 
 import Icon from 'react-native-vector-icons/Feather';
