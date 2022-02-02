@@ -1,13 +1,22 @@
 import React from 'react';
-import {View, Text, SafeAreaView, Pressable, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Pressable,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import {ScaledSheet, scale} from 'react-native-size-matters';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import TrackPlayer, {Track} from 'react-native-track-player';
-import Image from 'react-native-fast-image';
 
 import {theme} from '../../assets/theme/colors';
 import {fonts} from '../../assets';
 import {usePlayerContext} from '../../context/PlayerProvider';
+import {PodcastItem} from '../../components/PodcastItem';
+
+const windowHeight = Dimensions.get('window').height;
 
 export const QueueScreen: React.FC = () => {
   const [queue, setQueue] = React.useState<Track[]>([]);
@@ -45,18 +54,12 @@ export const QueueScreen: React.FC = () => {
                 goBack();
               }}
               key={track.id}>
-              <View style={styles.trackContainer}>
-                {track.artwork && (
-                  <Image source={{uri: track.artwork}} style={styles.img} />
-                )}
-                <View style={{flex: 0.04}} />
-                <View style={{flex: 0.7}}>
-                  <Text numberOfLines={1} style={styles.title}>
-                    {track.title}
-                  </Text>
-                  <Text style={styles.subTitle}>{track.artist}</Text>
-                </View>
-              </View>
+              <PodcastItem
+                image={String(track.artwork)}
+                mainTitle={track.title!}
+                title={track.artist!}
+                height={windowHeight / 8}
+              />
             </Pressable>
           ))}
         </ScrollView>
@@ -82,22 +85,5 @@ const styles = ScaledSheet.create({
   innerContainer: {
     flex: 1,
     padding: scale(10),
-  },
-  img: {
-    borderRadius: scale(12),
-    height: '80%',
-    flex: 0.26,
-  },
-  subTitle: {
-    fontFamily: fonts.RobotoFontLight,
-  },
-  trackContainer: {
-    flexDirection: 'row',
-    height: scale(90),
-  },
-  title: {
-    fontFamily: fonts.RobotoFontBold,
-    fontSize: scale(15),
-    marginBottom: scale(5),
   },
 });

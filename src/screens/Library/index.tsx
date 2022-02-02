@@ -1,75 +1,50 @@
 import React from 'react';
-import {View, Text, Dimensions, ScrollView} from 'react-native';
-import Image from 'react-native-fast-image';
+import {View, ScrollView, Text} from 'react-native';
+import {scale} from 'react-native-size-matters';
+
 import {fonts} from '../../assets';
-
 import {theme} from '../../assets/theme/colors';
+import {PodcastItem} from '../../components/PodcastItem';
 import {useDBContext} from '../../context/DBContext';
-
-const windowHeight = Dimensions.get('window').height;
 
 export const Library: React.FC = () => {
   const {broadcasts} = useDBContext();
+
+  if (broadcasts.length === 0) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: theme.colorWhite,
+        }}>
+        <Text
+          style={{fontFamily: fonts.RobotoFontRegular, fontSize: scale(16)}}>
+          No Podcasts Added to the Subscription List Yet!
+        </Text>
+      </View>
+    );
+  }
 
   return (
     <View style={{flex: 1, paddingVertical: 15, backgroundColor: '#2f2f2f'}}>
       <ScrollView style={{flex: 1}}>
         {broadcasts.map(item => (
           <View
-            key={item.feedUrl}
-            style={{
-              backgroundColor: '#568562',
-              marginVertical: 10,
-              height: windowHeight / 7,
-              justifyContent: 'space-around',
-            }}>
-            <Text
-              numberOfLines={1}
-              style={{
-                color: theme.colorWhite,
-                fontFamily: fonts.RobotoFontBold,
-                fontSize: 18,
-                marginLeft: 15,
-              }}>
-              {item.name}
-            </Text>
-            <View style={{flexDirection: 'row'}}>
-              <View style={{flex: 0.05}} />
-
-              <Image
-                source={{uri: item.thumbnail}}
-                style={{height: (windowHeight / 8) * 0.7, flex: 0.5}}
-              />
-              <View style={{flex: 0.05}} />
-              <View style={{flex: 1.5, justifyContent: 'space-around'}}>
-                <Text
-                  style={{
-                    color: theme.colorWhite,
-                    fontFamily: fonts.RobotoFontRegular,
-                    fontSize: 15,
-                  }}>
-                  {item.artist}
-                </Text>
-                <Text
-                  style={{
-                    color: theme.colorWhite,
-                    fontFamily: fonts.RobotoFontBold,
-                    fontSize: 15,
-                  }}>
-                  sponsored by:
-                </Text>
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    color: theme.colorWhite,
-                    fontFamily: fonts.RobotoFontRegular,
-                    fontSize: 15,
-                  }}>
-                  {item.feedUrl}
-                </Text>
-              </View>
-              <View style={{flex: 0.05}} />
-            </View>
+            style={{marginVertical: 5}}
+            key={item.feedUrl + String(Math.floor(Math.random() * 1000))}>
+            <PodcastItem
+              image={item.thumbnail}
+              mainTitle={item.artist}
+              title="Sponsored By:"
+              subTitle={item.feedUrl}
+              backgroundColor="#331b1b"
+              textColor="#fff"
+              font={fonts.RobotoFontRegular}
+              fontSize={scale(14)}
+              headerLine={item.name}
+            />
           </View>
         ))}
       </ScrollView>

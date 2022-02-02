@@ -1,12 +1,13 @@
 import React from 'react';
-import {View, Text, Pressable} from 'react-native';
 
-import {styles} from '../screens/Search/styles';
 import {SearchQuery_search} from '../types/graphql';
-import Image from 'react-native-fast-image';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {SearchStackParamList} from '../types/Navigation';
 import {useNavigation} from '@react-navigation/native';
+import {PodcastItem} from './PodcastItem';
+import {Dimensions} from 'react-native';
+
+const windowHeight = Dimensions.get('window').height;
 
 type SearchTypeProps = {
   item: SearchQuery_search;
@@ -18,28 +19,18 @@ export const SearchTile: React.FC<SearchTypeProps> = ({item}) => {
   const navigation = useNavigation<SearchScreenProp>();
 
   return (
-    <View style={styles.detailContainer}>
-      {item.thumbnail && (
-        <Image source={{uri: item.thumbnail}} style={styles.img} />
-      )}
-      <View style={{flex: 0.4}} />
-      <View style={styles.textDetails}>
-        <Text numberOfLines={1} style={styles.broadcastName}>
-          {item.podcastName}
-        </Text>
-        <Text numberOfLines={1} style={styles.artist}>
-          {item.artist}
-        </Text>
-        <Pressable
-          onPress={() =>
-            navigation.navigate('BroadCastDetailsNav', {
-              screen: 'BroadCastDetails',
-              params: {selectedItem: item},
-            })
-          }>
-          <Text style={styles.episodes}>{item.episodesCount} episodes</Text>
-        </Pressable>
-      </View>
-    </View>
+    <PodcastItem
+      image={item.thumbnail}
+      episodeCount={item.episodesCount}
+      mainTitle={item.podcastName}
+      title={item.artist}
+      height={windowHeight / 8}
+      onPress={() =>
+        navigation.navigate('BroadCastDetailsNav', {
+          screen: 'BroadCastDetails',
+          params: {selectedItem: item},
+        })
+      }
+    />
   );
 };
