@@ -3,6 +3,7 @@ import React from 'react';
 import {View, Text, SafeAreaView, Pressable, Dimensions} from 'react-native';
 import {ScaledSheet, scale} from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
+import HeartIcon from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-fast-image';
 
 import {theme} from '../../assets/theme/colors';
@@ -12,10 +13,18 @@ import {ProgressSlider} from '../../components/ProgressSlider';
 import {hitSlop} from '../../helpers';
 
 const {width} = Dimensions.get('window');
-
 export const PlayerScreen: React.FC = () => {
   const {goBack, navigate} = useNavigation();
-  const {currentTrack, seekTo, play, isPaused, pause} = usePlayerContext();
+  const {
+    favoriteTracks,
+    currentTrack,
+    seekTo,
+    play,
+    isPaused,
+    pause,
+    toggleFavorite,
+  } = usePlayerContext();
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
@@ -63,6 +72,22 @@ export const PlayerScreen: React.FC = () => {
               <Icon name="rotate-cw" size={width / 11} />
             </Pressable>
           </View>
+          <Pressable
+            onPress={() => {
+              if (currentTrack) {
+                toggleFavorite(currentTrack);
+              }
+            }}
+            style={{marginLeft: width / 10}}>
+            <HeartIcon
+              name={
+                favoriteTracks?.find(f => f.id === currentTrack?.id)
+                  ? 'heart'
+                  : 'heart-o'
+              }
+              size={width / 11}
+            />
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>

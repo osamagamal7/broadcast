@@ -7,37 +7,43 @@ import {
 
 import {
   LibraryStackParamList,
-  ListenNowStackParamList,
+  FavoriteTracksStackParamList,
   MainBottomTabParamList,
   SearchStackParamList,
 } from '../types/Navigation';
 import {Search} from '../screens/Search';
 import {Library} from '../screens/Library';
-import {ListenNow} from '../screens/ListenNow';
+import {FavoriteTracks} from '../screens/Favorites';
 import {BroadCastDetails} from '../screens/BroadCastDetails';
 import {theme} from '../assets/theme/colors';
-import {LibraryIcon, ListenNowIcon, SearchIcon} from '../components/Icons';
+import {FavIcon, LibraryIcon, SearchIcon} from '../components/Icons';
 import {MiniPlayer} from '../components/MiniPlayer';
 import {EpisodeDetailScreen} from '../screens/EpisodeDetailScreen.js';
+import {Dimensions} from 'react-native';
+
+const windowWidth = Dimensions.get('window').width;
 
 //ListenNow Stack Nav
-const ListenNowStack = createStackNavigator<ListenNowStackParamList>();
+const FavoriteTracksStack =
+  createStackNavigator<FavoriteTracksStackParamList>();
 
-export const ListenNowStackNavigator = () => (
-  <ListenNowStack.Navigator>
-    <ListenNowStack.Screen
-      name="ListenNow"
-      component={ListenNow}
-      options={{title: 'Listen Now'}}
+export const FavoriteTracksStackStackNavigator = () => (
+  <FavoriteTracksStack.Navigator
+    screenOptions={{headerTintColor: theme.colorBlueLight}}>
+    <FavoriteTracksStack.Screen
+      name="Favorite"
+      component={FavoriteTracks}
+      options={{title: 'Favorite Episodes'}}
     />
-  </ListenNowStack.Navigator>
+  </FavoriteTracksStack.Navigator>
 );
 
 //Library Stack Nav
 const LibraryStack = createStackNavigator<LibraryStackParamList>();
 
 export const LibraryStackNavigator = () => (
-  <LibraryStack.Navigator>
+  <LibraryStack.Navigator
+    screenOptions={{headerTintColor: theme.colorBlueLight}}>
     <LibraryStack.Screen name="Library" component={Library} />
   </LibraryStack.Navigator>
 );
@@ -47,7 +53,8 @@ const BroadcastStack = createStackNavigator();
 
 const BroadcastStackNavigator = () => {
   return (
-    <BroadcastStack.Navigator>
+    <BroadcastStack.Navigator
+      screenOptions={{headerTintColor: theme.colorBlueLight}}>
       <BroadcastStack.Screen
         name="BroadCastDetails"
         component={BroadCastDetails}
@@ -80,6 +87,7 @@ const MainTab = createBottomTabNavigator<MainBottomTabParamList>();
 export const MainTabNavigator: React.FC = () => {
   return (
     <MainTab.Navigator
+      initialRouteName="Search"
       tabBar={tabProps => (
         <>
           <MiniPlayer />
@@ -90,14 +98,14 @@ export const MainTabNavigator: React.FC = () => {
         showLabel: false,
       }}>
       <MainTab.Screen
-        name="ListenNow"
-        component={ListenNowStackNavigator}
+        name="Favorite"
+        component={FavoriteTracksStackStackNavigator}
         options={{
-          title: 'Listen Now',
+          title: 'Favorite',
           tabBarIcon: ({focused}) => (
-            <ListenNowIcon
-              color={focused ? theme.colorBlueLight : theme.colorDarkGrey}
-              size={25}
+            <FavIcon
+              color={focused ? theme.colorBlueLight : theme.colorGreyLight}
+              size={windowWidth / 14}
             />
           ),
         }}
@@ -106,11 +114,10 @@ export const MainTabNavigator: React.FC = () => {
         name="Library"
         component={LibraryStackNavigator}
         options={{
-          // tabBarLabel: 'Home',
           tabBarIcon: ({focused}) => (
             <LibraryIcon
-              color={focused ? theme.colorBlueLight : theme.colorDarkGrey}
-              size={25}
+              color={focused ? theme.colorBlueLight : theme.colorGreyLight}
+              size={windowWidth / 14}
             />
           ),
         }}
@@ -122,8 +129,8 @@ export const MainTabNavigator: React.FC = () => {
           tabBarLabel: 'Home',
           tabBarIcon: ({focused}) => (
             <SearchIcon
-              color={focused ? theme.colorBlueLight : theme.colorDarkGrey}
-              size={25}
+              color={focused ? theme.colorBlueLight : theme.colorGreyLight}
+              size={windowWidth / 14}
             />
           ),
         }}

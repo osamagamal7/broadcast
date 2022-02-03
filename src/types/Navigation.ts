@@ -5,8 +5,8 @@ export type RootStackParamList = {
   Tabs: undefined;
 };
 
-export type ListenNowStackParamList = {
-  ListenNow: undefined;
+export type FavoriteTracksStackParamList = {
+  Favorite: undefined;
 };
 
 export type BroadcastStackParamList = {
@@ -28,6 +28,6 @@ export type LibraryStackParamList = {
   Library: undefined;
 };
 
-export type MainBottomTabParamList = ListenNowStackParamList &
+export type MainBottomTabParamList = FavoriteTracksStackParamList &
   SearchStackParamList &
   LibraryStackParamList;

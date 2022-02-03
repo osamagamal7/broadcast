@@ -18,6 +18,8 @@ type PlayerContextType = {
   seekTo: (amount?: number) => void;
   pause: () => void;
   goTo: (amount: number) => void;
+  favoriteTracks: Track[];
+  toggleFavorite: (t: Track) => void;
 };
 
 export const PlayerContext = createContext<PlayerContextType>(
@@ -26,9 +28,24 @@ export const PlayerContext = createContext<PlayerContextType>(
 
 export const PlayerProvider: React.FC<ContextProviderType> = ({children}) => {
   const [currentTrack, setCurrentTrack] = React.useState<null | Track>(null);
+  const [favoriteTracks, setFavoriteTracks] = React.useState<Track[]>([]);
+
   const [playerState, setPlayerState] = React.useState<null | TrackPlayerState>(
     null,
   );
+
+  const toggleFavorite = (t: Track) => {
+    if (favoriteTracks?.find(f => f.id === t.id)) {
+      setFavoriteTracks(current => {
+        const newValue = current?.filter(f => f.id !== t.id);
+        return newValue;
+      });
+    } else {
+      setFavoriteTracks(prevState => {
+        return [...prevState!, t];
+      });
+    }
+  };
 
   React.useEffect(() => {
     const listener = TrackPlayer.addEventListener(
@@ -114,6 +131,8 @@ export const PlayerProvider: React.FC<ContextProviderType> = ({children}) => {
     play,
     seekTo,
     goTo,
+    toggleFavorite,
+    favoriteTracks,
   };
 
   return (
