@@ -1,4 +1,4 @@
-package com.broadcast;
+package com.radioCast;
 
 import com.oblador.vectoricons.VectorIconsPackage;
 import android.app.Application;
@@ -73,7 +73,7 @@ public class MainApplication extends Application implements ReactApplication {
          * We use reflection here to pick up the class that initializes Flipper,
          * since Flipper library is not available in release mode
          */
-        Class<?> aClass = Class.forName("com.broadcast.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.radioCast.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);

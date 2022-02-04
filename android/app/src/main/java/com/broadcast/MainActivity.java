@@ -1,4 +1,4 @@
-package com.broadcast;
+package com.radioCast;
 
 import com.facebook.react.ReactActivity;
 
