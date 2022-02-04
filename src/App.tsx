@@ -3,6 +3,7 @@ import React from 'react';
 import {ApolloProvider} from '@apollo/client';
 import {ActivityIndicator} from 'react-native';
 import TrackPlayer, {Capability} from 'react-native-track-player';
+import SplashScreen from 'react-native-splash-screen';
 
 import {AppNavContainer} from './navigations';
 import {client} from './graphql/client';
@@ -31,6 +32,7 @@ export const App: React.FC = () => {
   };
 
   React.useEffect(() => {
+    SplashScreen.hide();
     setup();
   }, []);
 
