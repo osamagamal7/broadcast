@@ -1,6 +1,8 @@
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {View, Pressable, Dimensions, Text, ScrollView} from 'react-native';
 import {scale} from 'react-native-size-matters';
+import TrackPlayer, {Track} from 'react-native-track-player';
 
 import {fonts} from '../../assets';
 import {theme} from '../../assets/theme/colors';
@@ -12,6 +14,20 @@ const windowHeight = Dimensions.get('window').height;
 
 export const FavoriteTracks: React.FC = () => {
   const {favoriteTracks, toggleFavorite} = usePlayerContext();
+  const {play} = usePlayerContext();
+  const {navigate} = useNavigation();
+  const [queue, setQueue] = React.useState<Track[]>([]);
+
+  const getQueue = async () => {
+    const tracks = await TrackPlayer.getQueue();
+    setQueue(tracks);
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getQueue();
+    }, []),
+  );
 
   if (favoriteTracks.length === 0) {
     return (
@@ -32,7 +48,13 @@ export const FavoriteTracks: React.FC = () => {
   return (
     <ScrollView style={{backgroundColor: theme.colorWhite, flex: 1}}>
       {favoriteTracks.map(item => (
-        <Pressable onPress={() => {}} key={item.id}>
+        <Pressable
+          onPress={() => {
+            const i = queue.findIndex(i => i.id === item.id);
+            play(item, i);
+            navigate('Player');
+          }}
+          key={item.id}>
           <PodcastItem
             image={String(item.artwork)}
             mainTitle={item.title!}

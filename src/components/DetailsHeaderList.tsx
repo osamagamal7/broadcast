@@ -22,7 +22,7 @@ export const DetailsHeaderList: React.FC<DetailsHeaderType> = ({
   selectedItem,
 }) => {
   const {play} = usePlayerContext();
-  const {subToBroadcast} = useDBContext();
+  const {subToBroadcast, broadcasts, removeBroadcast} = useDBContext();
 
   return (
     <View style={styles.listHeaderComponent}>
@@ -38,18 +38,37 @@ export const DetailsHeaderList: React.FC<DetailsHeaderType> = ({
           <Text style={styles.podcastName}>{selectedItem.podcastName}</Text>
           <Text style={styles.artistName}>{selectedItem.artist}</Text>
           <Pressable
-            onPress={() =>
-              subToBroadcast(
-                new BroadcastModel({
-                  artist: selectedItem?.artist,
-                  episodesCount: selectedItem?.episodesCount,
-                  feedUrl: selectedItem?.feedUrl,
-                  name: selectedItem?.podcastName,
-                  thumbnail: selectedItem?.thumbnail,
-                }),
-              )
-            }>
-            <Text style={styles.subscribed}>Subscribe</Text>
+            onPress={() => {
+              const i = broadcasts?.findIndex(
+                f => f.name == selectedItem.podcastName,
+              );
+              if (i) {
+                subToBroadcast(
+                  new BroadcastModel({
+                    artist: selectedItem?.artist,
+                    episodesCount: selectedItem?.episodesCount,
+                    feedUrl: selectedItem?.feedUrl,
+                    name: selectedItem?.podcastName,
+                    thumbnail: selectedItem?.thumbnail,
+                  }),
+                );
+              } else {
+                removeBroadcast(
+                  new BroadcastModel({
+                    artist: selectedItem?.artist,
+                    episodesCount: selectedItem?.episodesCount,
+                    feedUrl: selectedItem?.feedUrl,
+                    name: selectedItem?.podcastName,
+                    thumbnail: selectedItem?.thumbnail,
+                  }),
+                );
+              }
+            }}>
+            <Text style={styles.subscribed}>
+              {broadcasts?.findIndex(f => f.name == selectedItem.podcastName)
+                ? 'Subscribe'
+                : 'Unsubscribe'}
+            </Text>
           </Pressable>
         </View>
       </View>

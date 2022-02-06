@@ -6,6 +6,7 @@ import {SQLiteServices} from '../utilsAndServices/sqliteServices';
 type DBContextProps = {
   broadcasts: BroadcastModel[];
   subToBroadcast: (broadcast: BroadcastModel) => Promise<void>;
+  removeBroadcast: (broadcast: BroadcastModel) => Promise<void>;
 };
 
 type DBProviderType = {
@@ -37,9 +38,18 @@ export const DBProvider: FC<DBProviderType> = ({children}) => {
     }
   }, []);
 
+  const removeBroadcast = useCallback(async (broadcast: BroadcastModel) => {
+    if (db.current) {
+      await db.current.deleteBroadcast(broadcast);
+      const _broadcasts = await db.current.getAllBroadCasts();
+      setBroadcasts(_broadcasts);
+    }
+  }, []);
+
   const value: DBContextProps = {
     broadcasts,
     subToBroadcast,
+    removeBroadcast,
   };
 
   return <DBContext.Provider value={value}>{children}</DBContext.Provider>;

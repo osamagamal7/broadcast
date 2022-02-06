@@ -32,8 +32,8 @@ export const App: React.FC = () => {
   };
 
   React.useEffect(() => {
-    SplashScreen.hide();
     setup();
+    SplashScreen.hide();
   }, []);
 
   return (

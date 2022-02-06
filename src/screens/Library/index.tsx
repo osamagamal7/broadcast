@@ -8,7 +8,7 @@ import {PodcastItem} from '../../components/PodcastItem';
 import {useDBContext} from '../../context/DBContext';
 
 export const Library: React.FC = () => {
-  const {broadcasts} = useDBContext();
+  const {broadcasts, removeBroadcast} = useDBContext();
 
   if (broadcasts.length === 0) {
     return (
@@ -44,6 +44,7 @@ export const Library: React.FC = () => {
               font={fonts.RobotoFontRegular}
               fontSize={scale(14)}
               headerLine={item.name}
+              onRemoveTrack={() => removeBroadcast(item)}
             />
           </View>
         ))}

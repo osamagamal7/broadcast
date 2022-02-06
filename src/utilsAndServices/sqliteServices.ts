@@ -77,7 +77,24 @@ export class SQLiteServices implements IDatabaseContract {
             resolve();
           },
           (_, err) => {
-            console.log('error insert broadcast', err);
+            reject(err);
+          },
+        );
+      });
+    });
+  }
+
+  deleteBroadcast(broadcastModel: BroadcastModel): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this._db.transaction(tx => {
+        tx.executeSql(
+          `DELETE FROM broadcasts WHERE name='${broadcastModel.name}'`,
+          [],
+          () => {
+            resolve();
+          },
+          (_, err) => {
+            console.log('error deleting a broadcast', err);
             reject(err);
           },
         );
