@@ -8,7 +8,9 @@ export const SearchLoadingOrEmpty = ({empty}: {empty?: Boolean}) => {
   if (empty === false) {
     return (
       <View style={styles.container}>
-        <Text style={{fontFamily: fonts.RobotoFontRegular, fontSize: 18}}>
+        <Text
+          testID="start"
+          style={{fontFamily: fonts.RobotoFontRegular, fontSize: 18}}>
           Start Searching For Podcasts To Listen To!
         </Text>
       </View>

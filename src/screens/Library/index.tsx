@@ -28,7 +28,9 @@ export const Library: React.FC = () => {
   }
 
   return (
-    <View style={{flex: 1, paddingVertical: 15, backgroundColor: '#2f2f2f'}}>
+    <View
+      style={{flex: 1, paddingVertical: 15, backgroundColor: '#2f2f2f'}}
+      testID="savedPodcast">
       <ScrollView style={{flex: 1}}>
         {broadcasts.map(item => (
           <View

@@ -30,13 +30,21 @@ export const DetailsHeaderList: React.FC<DetailsHeaderType> = ({
       <View style={{flexDirection: 'row'}}>
         <View style={{flex: 3}}>
           {selectedItem.thumbnail && (
-            <Image source={{uri: selectedItem.thumbnail}} style={styles.img} />
+            <Image
+              source={{uri: selectedItem.thumbnail}}
+              style={styles.img}
+              testID="img"
+            />
           )}
         </View>
         <View style={{flex: 0.5}} />
         <View style={{flex: 6.5}}>
-          <Text style={styles.podcastName}>{selectedItem.podcastName}</Text>
-          <Text style={styles.artistName}>{selectedItem.artist}</Text>
+          <Text style={styles.podcastName} testID="podcastName">
+            {selectedItem.podcastName}
+          </Text>
+          <Text testID="artist" style={styles.artistName}>
+            {selectedItem.artist}
+          </Text>
           <Pressable
             onPress={() => {
               const i = broadcasts?.findIndex(
@@ -64,7 +72,7 @@ export const DetailsHeaderList: React.FC<DetailsHeaderType> = ({
                 );
               }
             }}>
-            <Text style={styles.subscribed}>
+            <Text style={styles.subscribed} testID="subscribe">
               {broadcasts?.findIndex(f => f.name == selectedItem.podcastName)
                 ? 'Subscribe'
                 : 'Unsubscribe'}

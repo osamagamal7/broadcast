@@ -114,6 +114,7 @@ export const MainTabNavigator: React.FC = () => {
         name="Library"
         component={LibraryStackNavigator}
         options={{
+          tabBarTestID: 'lib-Tab',
           tabBarIcon: ({focused}) => (
             <LibraryIcon
               color={focused ? theme.colorBlueLight : theme.colorGreyLight}
@@ -126,6 +127,7 @@ export const MainTabNavigator: React.FC = () => {
         name="Search"
         component={SearchStackNavigator}
         options={{
+          tabBarTestID: 'searchTab',
           tabBarLabel: 'Home',
           tabBarIcon: ({focused}) => (
             <SearchIcon

@@ -26,6 +26,7 @@ export const Search: React.FC = () => {
   return (
     <View style={styles.container}>
       <Input
+        testID="input"
         inputContainerStyle={styles.inputContainer}
         leftIcon={{
           type: 'font-awesome',
@@ -48,6 +49,7 @@ export const Search: React.FC = () => {
         <FlatList
           contentContainerStyle={styles.list}
           data={data?.search ?? []}
+          testID="podcastData"
           keyboardShouldPersistTaps="never"
           keyExtractor={item => {
             return (

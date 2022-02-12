@@ -52,7 +52,8 @@ export const PodcastItem: React.FC<PodcastItemType> = ({
         backgroundColor: backgroundColor,
         height: height,
         justifyContent: 'space-around',
-      }}>
+      }}
+      testID="podcastItem">
       {headerLine && (
         <Text
           numberOfLines={1}
@@ -124,7 +125,8 @@ export const PodcastItem: React.FC<PodcastItemType> = ({
                   color: theme.colorBlueLight,
                   fontFamily: fonts.RobotoFontRegular,
                   fontSize: scale(14),
-                }}>
+                }}
+                testID="pisodecount">
                 {episodeCount} episodes
               </Text>
             </Pressable>
@@ -138,6 +140,7 @@ export const PodcastItem: React.FC<PodcastItemType> = ({
               name="delete"
               size={height * 0.3}
               color={theme.colorBlueLight}
+              testID="removePodcast"
             />
           </Pressable>
         )}
