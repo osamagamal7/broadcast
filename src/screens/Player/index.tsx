@@ -1,6 +1,13 @@
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {View, Text, SafeAreaView, Pressable, Dimensions} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Pressable,
+  Dimensions,
+  ScrollView,
+} from 'react-native';
 import {ScaledSheet, scale} from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
 import HeartIcon from 'react-native-vector-icons/FontAwesome';
@@ -27,7 +34,9 @@ export const PlayerScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.innerContainer}>
+      <ScrollView
+        style={styles.innerContainer}
+        contentContainerStyle={{paddingBottom: scale(30)}}>
         <View style={styles.btnContainer}>
           <Pressable
             onPress={() => goBack()}
@@ -89,7 +98,7 @@ export const PlayerScreen: React.FC = () => {
             />
           </Pressable>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

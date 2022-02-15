@@ -48,7 +48,7 @@ export const DetailsHeaderList: React.FC<DetailsHeaderType> = ({
           <Pressable
             onPress={() => {
               const i = broadcasts?.findIndex(
-                f => f.name == selectedItem.podcastName,
+                f => f.name === selectedItem.podcastName,
               );
               if (i) {
                 subToBroadcast(

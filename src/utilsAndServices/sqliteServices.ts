@@ -88,7 +88,7 @@ export class SQLiteServices implements IDatabaseContract {
     return new Promise((resolve, reject) => {
       this._db.transaction(tx => {
         tx.executeSql(
-          `DELETE FROM broadcasts WHERE name='${broadcastModel.name}'`,
+          `DELETE FROM broadcasts WHERE name="${broadcastModel.name}"`,
           [],
           () => {
             resolve();
